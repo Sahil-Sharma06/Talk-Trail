@@ -14,7 +14,7 @@
 
 ## Tech Stack
 
-- **Frontend:** React, HTML, CSS
+- **Frontend:** React, TailwindCSS, Daisy-UI
 - **Backend:** Node.js, Express
 - **Database:** MongoDB
 - **Real-Time:** WebSockets (Socket.io)
