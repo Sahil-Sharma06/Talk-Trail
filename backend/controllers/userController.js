@@ -46,7 +46,7 @@ export const login = async (req,res)=>{
         };
         const user = await User.findOne({username});
         if(!user){
-            return res.statis(400).json({
+            return res.status(400).json({
                 message:"Incorrect username!",
                 success:false
             })

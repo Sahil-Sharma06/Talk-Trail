@@ -4,20 +4,20 @@ import toast from "react-hot-toast"
 import axios from "axios";
 // import { useDispatch } from "react-redux";
 // import { setAuthUser } from '../redux/userSlice';
-import { BASE_URL } from '..';
+// import { BASE_URL } from '..';
 
 const Login = () => {
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${BASE_URL}/api/v1/user/login`, user, {
+      const res = await axios.post(`http://localhost:8080/api/v1/user/login`, user, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -25,7 +25,7 @@ const Login = () => {
       });
       navigate("/");
       console.log(res);
-      dispatch(setAuthUser(res.data));
+      // dispatch(setAuthUser(res.data));
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error);
