@@ -1,6 +1,6 @@
 import React from 'react'
 import OtherUser from './OtherUsers';
-// import useGetOtherUsers from '../hooks/useGetOtherUsers';
+import useGetOtherUsers from '../hooks/useGetOtherUsers';
 import {useSelector} from "react-redux";
 
 
