@@ -21,37 +21,27 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      // Sending a POST request with axios
       const res = await axios.post('http://localhost:8080/api/v1/user/register', user, {
         headers: {
-          'Content-Type': 'application/json', // Ensuring content-type is correct
+          'Content-Type': 'application/json',
         },
-        withCredentials: true, // Required if your backend uses cookies/sessions
+        withCredentials: true,
       });
 
-      // If request is successful, navigate to login and show success message
       if (res.data.success) {
         navigate('/login');
         toast.success(res.data.message);
       }
     } catch (error) {
-      // Handling Axios errors and showing the correct error message
       if (error.response) {
-        // Backend responded with status code outside 2xx
-        console.log('Error Response Data:', error.response.data);
         toast.error(error.response.data.message || 'Registration failed');
       } else if (error.request) {
-        // Request was made but no response received
-        console.log('Error Request:', error.request);
         toast.error('No response from server. Please try again later.');
       } else {
-        // Other errors (setup or unexpected issues)
-        console.log('Error Message:', error.message);
         toast.error('An unexpected error occurred. Please try again.');
       }
     }
 
-    // Resetting form fields after submission
     setUser({
       fullname: '',
       username: '',
@@ -65,7 +55,7 @@ const Signup = () => {
     <div className="mx-auto min-w-96">
       <div className="w-full p-6 bg-gray-400 border border-gray-100 rounded-lg shadow-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10">
         <h1 className="text-3xl font-bold text-center">Signup</h1>
-        <form onSubmit={onSubmitHandler} action="">
+        <form onSubmit={onSubmitHandler}>
           <div>
             <label className="p-2 label">
               <span className="text-base label-text">Full Name</span>

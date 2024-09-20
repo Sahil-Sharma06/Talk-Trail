@@ -1,13 +1,19 @@
+import Signup from './components/Signup';
 import './App.css';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import Homepage from "./components/Homepage"
-import Signup from "./components/signup"
-import Login from "./components/Login"
+import HomePage from './components/HomePage';
+import Login from './components/Login';
+import { useEffect, useState } from 'react';
+import {useSelector,useDispatch} from "react-redux";
+import io from "socket.io-client";
+import { setSocket } from './redux/socketSlice';
+import { setOnlineUsers } from './redux/userSlice';
+import { BASE_URL } from '.';
 
 const router = createBrowserRouter([
   {
     path:"/",
-    element:<Homepage/>
+    element:<HomePage/>
   },
   {
     path:"/signup",
@@ -19,11 +25,39 @@ const router = createBrowserRouter([
   },
 
 ])
-function App() {
+
+function App() { 
+  const {authUser} = useSelector(store=>store.user);
+  const {socket} = useSelector(store=>store.socket);
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    if(authUser){
+      const socketio = io(`${BASE_URL}`, {
+          query:{
+            userId:authUser._id
+          }
+      });
+      dispatch(setSocket(socketio));
+
+      socketio?.on('getOnlineUsers', (onlineUsers)=>{
+        dispatch(setOnlineUsers(onlineUsers))
+      });
+      return () => socketio.close();
+    }else{
+      if(socket){
+        socket.close();
+        dispatch(setSocket(null));
+      }
+    }
+
+  },[authUser]);
+
   return (
     <div className="flex items-center justify-center h-screen p-4">
-     <RouterProvider router={router}/>
+      <RouterProvider router={router}/>
     </div>
+
   );
 }
 
