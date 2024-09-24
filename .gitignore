@@ -74,11 +74,9 @@ typings/
 
 # Gatsby files
 .cache/
-public/
 
 # Vue.js
 .vuepress/dist
-public
 
 # Serverless directories
 .serverless/
